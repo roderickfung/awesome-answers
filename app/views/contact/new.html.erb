@@ -1,0 +1,21 @@
+<h1 style='margin: 20pt 0pt 20pt 0pt;'>Contact Us</h1>
+
+<%= form_tag contact_path do%>
+  <div>
+    <%=label_tag :name %>
+    <%=text_field_tag :name, nil, {class:'span4', placeholder:'John Smith'}%>
+  </div>
+  <div>
+    <%=label_tag :email%>
+    <%= email_field_tag :user, nil, {class:'span4', placeholder: 'john@smith.com'}%>
+  </div>
+  <div>
+    <%=label_tag :subject %>
+    <%=text_field_tag :subject, nil, {class:'span8', placeholder:'Subject Title'}%>
+  </div>
+  <div>
+    <%=label_tag :message %>
+    <%=text_area_tag :message, nil, {rows:'15', class:'span10'}%>
+  </div>
+    <%=submit_tag 'Send Message', class:'btn btn-primary'%>
+<%end%>

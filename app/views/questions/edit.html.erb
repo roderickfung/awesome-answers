@@ -1,0 +1,33 @@
+<h1>Edit Question</h1>
+
+<% if @question.errors.any? %>
+  <ul>
+    <%= @question.errors.full_messages.each do |msg| %>
+      <li><%=msg%></li>
+    <%end%>
+  </ul>
+<%end%>
+<%# Question.errors.full_messages.join(', ') %>
+<div class='container-fluid' style='margin: 30pt 0pt 0pt 0pt'>
+  <%= form_for @question do |f| %>
+  <div class='question-block'>
+    <div class='form-label'>
+      <%= f.label :title%>
+    </div>
+    <div class= 'form-field'>
+      <%= f.text_field :title, class: 'span8'%>
+    </div>
+  </div>
+  <div class='question-block'>
+    <div class='form-label'>
+      <%= f.label :body %>
+    </div>
+    <div class='form-field'>
+      <%= f.text_area :body , {class: 'span8', rows: 12} %>
+    </div>
+  </div>
+  <div>
+    <%= f.submit'Edit Question', class: 'btn btn-primary'%>
+  </div>
+  <% end %>
+</div>

@@ -1,0 +1,41 @@
+<h1>Questions</h1>
+
+<%#
+  form_for is a Rails built-in form helper which generates a form that integrates nicely with a matching controller. (e.g question controller)
+    case 1: if @question is not persisted (not saved to database), then form_for will make the form send a 'POST' request to 'question_path' which should be defined to submot to question controller / create action.
+
+    Also, if you have any attributes pre-set on any of the @question fields (such as title/body), it will pre-populate those fields.
+
+    It will also add a special class if there happens to be errors on a specific field.
+%>
+<% if @question.errors.any? %>
+  <ul>
+    <%= @question.errors.full_messages.each do |msg| %>
+      <li><%=msg%></li>
+    <%end%>
+  </ul>
+<%end%>
+<%# Question.errors.full_messages.join(', ') %>
+<div class='container-fluid' style='margin: 30pt 0pt 0pt 0pt'>
+  <%= form_for @question do |f| %>
+  <div class='question-block'>
+    <div class='form-label'>
+      <%= f.label :title%>
+    </div>
+    <div class= 'form-field'>
+      <%= f.text_field :title, class: 'span8'%>
+    </div>
+  </div>
+  <div class='question-block'>
+    <div class='form-label'>
+      <%= f.label :body %>
+    </div>
+    <div class='form-field'>
+      <%= f.text_area :body , {class: 'span8', rows: 12} %>
+    </div>
+  </div>
+  <div>
+    <%= f.submit'Create Question', class: 'btn btn-primary'%>
+  </div>
+  <% end %>
+</div>

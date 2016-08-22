@@ -1,0 +1,13 @@
+<h1>All Questions</h1>
+<table class='table-striped table'>
+  <tr>
+    <th>Title</th>
+    <th>Link</th>
+  </tr>
+  <% @questions.each do |q|%>
+    <tr>
+      <td><b><%=q.title%></b></td>
+      <td><%=link_to 'View Question', question_path(q), class:'btn btn-info'%></td>
+    </tr>
+  <%end%>
+</table>
