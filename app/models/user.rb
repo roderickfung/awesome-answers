@@ -7,6 +7,13 @@ class User < ApplicationRecord
   # attr_accessor :password, :password_confirmation
 
   has_many :questions, dependent: :nullify
+
+  has_many :likes, dependent: :destroy
+  has_many :liked_questions, through: :likes, source: :question
+
+  has_many :votes, dependent: :destroy
+  has_many :voted_questions, through: :votes, source: :question
+
   after_initialize :set_defaults
 
   def full_name

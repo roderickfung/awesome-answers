@@ -29,26 +29,33 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
-    #This ability class gets instantiated and used automatically by the CanCanCan gem. There is an assumption that you have methods in the controller to get the current user. The method name is 'current_user'
+    user ||= User.new
 
-    def initialize(user)
-      user ||= User.new
-
-      if user.admin?
-        can :manage, :all
-      else
-        can :read, :all
-      end
-
-      can :manage, Question do |q|
-        user == q.user
-      end
-
-      can :manage, Answer do |a|
-        #this enforces that the logged in user must be either the owner of the answer or the owner for the question that the answer references.
-        user == a.user || user == answer.question.user
-      end
-
+    if user.admin?
+      can :manage, :all
+    else
+      can :read, :all
     end
+
+    can :manage, Question do |question|
+      user == question.user || user.admin?
+    end
+
+    can :manage, Answer do |answer|
+      user == answer.user || user == answer.question.user
+    end
+
+    can :like, Question do |question|
+      user != question.user
+    end
+
+    cannot :like, Question do |question|
+      user == question.user
+    end
+
+    can :destroy, Like do |like|
+      user == like.user
+    end
+
   end
 end

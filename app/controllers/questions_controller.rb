@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :find_question, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:create, :edit, :destroy, :update, :new]
-  before_action :authorize, only: [:destriy, :update, :edit]
+  before_action :authorize!, only: [:destroy, :update, :edit]
 
   def new
     #we are instantiating a new question object as it will help us build a form to create a question easily.
@@ -35,9 +35,9 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @limit = 10
+    @limit = 30
     @offset = 0
-    @questions = Question.order(created_at: :desc)
+    @questions = Question.order(created_at: :desc).page(params[:page]).per(@limit)
   end
 
   def edit
@@ -59,12 +59,17 @@ class QuestionsController < ApplicationController
     redirect_to questions_path
   end
 
-  def authorize
+  def authorize!
     redirect_to root_path, alert: "access denied" unless can? :manage, @question
   end
 
   def find_question
     @question = Question.find params[:id]
   end
+
+  def user_vote
+    user_vote ||= @question.vote_for current_user
+  end
+  helper_method :user_vote
 
 end

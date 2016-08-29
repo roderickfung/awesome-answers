@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'likes/create'
+
+  get 'likes/destroy'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   #this defines a route that when we receive a 'GET' request with URL '/' it will invoke the 'welcome_controller' with 'index' action.
@@ -23,8 +27,9 @@ Rails.application.routes.draw do
     # post :search, on: :member
     #this is when we want to have nested routes for our resources. Ex. answers for questions.
     # post :search
-
     resources :answers, only: [:create, :destroy,:index]
+    resources :likes, only: [:create, :destroy]
+    resources :votes, only: [:create, :update, :destroy]
   end
 
   # get '/questions/new' => "questions#new", as: :new_question

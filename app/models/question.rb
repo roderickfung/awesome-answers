@@ -7,6 +7,12 @@ class Question < ApplicationRecord
   #destroy: will delete associated answers before deleting a question.
   #nullify: will make question_id 'null' for associated answers before deleting.
   has_many :answers, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :users, through: :likes
+
+  has_many :votes, dependent: :destroy
+  has_many :voting_users, through: :votes, source: :user
+
   belongs_to :user
 
   validates :title, presence: true, uniqueness: {message: "must be unique, yo."}
@@ -36,6 +42,20 @@ class Question < ApplicationRecord
   # scope :recent_ten, lambda {order(created_at: :desc).limit(10)}
   def self.recent_ten
     order(created_at: :desc).limit(10)
+  end
+
+  def like_for(user)
+    likes.find_by_user_id user
+
+  end
+
+  def vote_for(user)
+    votes.find_by_user_id user
+  end
+
+  def vote_value
+    # votes.where(is_up: true).count - votes.where(is_up: false).count
+    votes.up.count - votes.down.count
   end
 
   private

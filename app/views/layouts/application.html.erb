@@ -9,7 +9,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-inverse" style = 'width: 100%; background-color: #111111;'>
+    <nav class="navbar navbar-fixed-top navbar-default faded" style = 'width: 100%;'>
       <div class="container-fluid">
         <ul class="nav navbar-nav">
           <li><%=link_to 'Home', root_path%></li>
@@ -37,8 +37,13 @@
         </ul>
       </div>
     </nav>
+    <div class='content-body'>
     <div class='container'>
+      <div class='flash-message'>
+        <%=flash[:notice] || flash[:alert]%>
+      </div>
       <%= yield %>
     </div>
+  </div>
   </body>
 </html>

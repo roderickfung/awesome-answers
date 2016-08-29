@@ -3,7 +3,7 @@
 <div>
   <%= @user.errors.full_messages.join(", ")%>
 </div>
-<div>  
+<div>
   <%= form_for @user do |f| %>
     <div>
       <%= f.label :first_name%>
