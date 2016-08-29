@@ -35,6 +35,10 @@ gem "cowsay"#, github: "johnnyt/cowsay"
 
 gem 'bootstrap-sass'
 gem 'kaminari'
+gem 'chosen-rails'
+gem 'delayed_job_active_record'
+gem 'sinatra', '2.0.0.beta2'
+gem 'delayed_job_web'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -53,6 +57,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem "rails-erd"
+  gem "letter_opener"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

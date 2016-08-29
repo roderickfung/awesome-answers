@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
   def create
     #strong parameters feature of Rails to only let mass-assigning attributes that users are allowed to set.
     # questions_params = params.require(:question).permit([:title,:body])
-    @question = Question.create params.require(:question).permit([:title,:body])
+    @question = Question.create params.require(:question).permit([:title,:body, {tag_ids: []}])
     @question.user = current_user
     # question.save ? render (json: params) : (render :new)
     if @question.save

@@ -1,0 +1,20 @@
+<h4>Hello <%=@question_owner.full_name%></h4>
+<p>
+  You have received a new answer to your question.
+</p>
+
+<p>
+  Question.title: <%=@question.title%>
+</p>
+<p>
+  Answer: <%=@answer.body%>
+</p>
+<p>
+  <%= link_to "Click here to view the question", question_url(@question)%>
+</p>
+<p>
+  Regards,
+</p>
+<p>
+  Awesom Answers Team
+</p>

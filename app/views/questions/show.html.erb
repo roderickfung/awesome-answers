@@ -6,6 +6,9 @@
   </p>
 
   <div style='float: right; clear: right;'>
+    <div>
+      <%= @question.tags.map{|t| t.name}.join(', ')%>
+    </div>
     <%= link_to 'Edit', edit_question_path(@question), style:'display: inline;'%> | <%= link_to 'Delete', question_path(@question), method: :delete, data: {confirm: 'Are you sure?'}, style:'display: inline;'%> |
     <%# if can? :like, @question%>
       <%user_like = @question.like_for current_user%>
@@ -37,7 +40,6 @@
       <%end%>
     </div>
   </div>
-
 
     <div style="margin: 50px 50px 20px 50px;">
         <%@answers.each do |a|%>

@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   get 'likes/destroy'
 
+  match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   #this defines a route that when we receive a 'GET' request with URL '/' it will invoke the 'welcome_controller' with 'index' action.
