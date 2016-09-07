@@ -11,24 +11,49 @@ class AnswersController < ApplicationController
     @question = Question.find params[:question_id]
     @answer = Answer.new params.require(:answer).permit(:body)
     @answer.question = @question
-    @answer.save
-    AnswerMailer.notify_question_owner(@answer).deliver_later
-    # @answer = Answer.create params.require(:answer).permit([:body,:question_id]).where(@question)
-    redirect_to question_path(@question), notice: "Answer Created!"
+
+    respond_to do |format|
+      if @answer.save
+        # THE LINE BELOW IS FOR EMAILING
+        # AnswerMailer.notify_question_owner(@answer).deliver_later
+        # @answer = Answer.create params.require(:answer).permit([:body,:question_id]).where(@question)
+        format.html{
+          redirect_to question_path(@question), notice: "Answer Created!"
+        }
+        format.js{
+          render :create_success
+        }
+      else
+        flash[:alert] = "Please fix errors"
+        format.html{
+          render '/questions/show'
+        }
+        format.js{
+          render :create_failure
+        }
+      end
+    end
   end
 
   def destroy
     @question = Question.find params[:question_id]
     @answer = Answer.find params[:id]
     @answer.destroy
-    redirect_to question_path(@question), notice: "Answer Destroyed"
+    respond_to do |format|
+      format.html{
+        redirect_to question_path(@question), notice: "Answer Destroyed"
+      }
+      format.js{
+        render #it will automatically look for /app/views/answers/destroy.js.erb
+      }
+    end
   end
 
   private
 
-  def user_vote
-    user_vote ||= @question.vote_for current_user
-  end
-  helper_method :user_vote
+  # def user_vote
+  #   user_vote ||= @question.vote_for current_user
+  # end
+  # helper_method :user_vote
 
 end

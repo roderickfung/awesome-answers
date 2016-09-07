@@ -49,7 +49,6 @@ class Question < ApplicationRecord
 
   def like_for(user)
     likes.find_by_user_id user
-
   end
 
   def vote_for(user)

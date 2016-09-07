@@ -7,22 +7,43 @@ class VotesController < ApplicationController
     # vote = Vote.new params[:vote][:is_up]
     vote = Vote.new vote_params
     vote.user = current_user
-    vote.question = question
-    if vote.save
-      redirect_to question_path(@question)
-    else
-      redirect_to question_path(@question), alert: "Cannot Vote"
+    vote.question = @question
+    respond_to do |format|
+      if vote.save
+        format.html{ redirect_to question_path(@question) }
+        format.js{
+          render :refresh_vote#this renders /votes/create.js.erb
+        }
+      else
+        format.html{ redirect_to question_path(@question), alert: "Cannot Vote" }
+        format.js{
+          render :refresh_vote
+        }
+      end
     end
+
   end
 
   def update
     vote.update vote_params
-    redirect_to question_path @question, notice: 'Vote Updated'
+    respond_to do |format|
+      format.html{redirect_to question_path @question, notice: 'Vote Updated'}
+      format.js{
+        render :refresh_vote
+      }
+    end
   end
 
   def destroy
     vote.destroy
-    redirect_to question_path @question, notice: 'Unvoted'
+    respond_to do |format|
+      format.html {
+        redirect_to question_path @question, notice: 'Unvoted'
+      }
+      format.js {
+        render :refresh_vote
+      }
+    end
   end
 
   private

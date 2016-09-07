@@ -67,9 +67,9 @@ class QuestionsController < ApplicationController
     @question = Question.find params[:id]
   end
 
-  def user_vote
-    user_vote ||= @question.vote_for current_user
-  end
-  helper_method :user_vote
+  # def user_vote
+  #   user_vote ||= @question.vote_for current_user
+  # end
+  # helper_method :user_vote
 
 end

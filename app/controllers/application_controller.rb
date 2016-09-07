@@ -20,4 +20,9 @@ class ApplicationController < ActionController::Base
     redirect_to new_session_path unless user_signed_in?
   end
 
+  # def user_vote
+  #   user_vote ||= @question.vote_for current_user
+  # end
+  # helper_method :user_vote
+
 end
